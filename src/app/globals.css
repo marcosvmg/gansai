@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+:root {
+  --color-c6: #141413;
+  --color-c5: #2e2e2b;
+  --color-c4: #61615b;
+  --color-c3: #94948a;
+  --color-c2: #c7c7ba;
+  --color-c1: #e0e0d2;
+  --color-c0: #fafaea;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-garamond: var(--font-eb-garamond);
+  --font-merriweather: var(--font-merriweather);
+
+  --color-c0: var(--color-c0);
+  --color-c1: var(--color-c1);
+  --color-c2: var(--color-c2);
+  --color-c3: var(--color-c3);
+  --color-c4: var(--color-c4);
+  --color-c5: var(--color-c5);
+  --color-c6: var(--color-c6);
+
+  --color-gd: linear-gradient(135deg, #2e2e2b 0%, #1e1e1e 100%);
+}
+/* Adicione sua animação customizada aqui */
+@layer base {
+  @keyframes slowRotate {
+    from {
+      transform: rotate(0deg) scale(1);
+    }
+    to {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+
+  body {
+    color: var(--color-c4);
+    font-family: var(--font-merriweather), Georgia, serif; /* Atualizado */
+  }
+}
