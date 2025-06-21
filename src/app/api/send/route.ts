@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   try {
     const { data, error } = await resend.emails.send({
       from: 'Gansai Website <onboarding@resend.dev>',
-      to: ['SEU_EMAIL_DE_DESTINO@example.com'], // << SUBSTITUA PELO SEU E-MAIL
+      to: ['devmarcosvmg@gmail.com'], // << SUBSTITUA PELO SEU E-MAIL
       subject: `New Message from ${name}: ${subject}`,
       replyTo: email, // Adiciona o e-mail do usuário no campo "Responder Para"
       html: `
