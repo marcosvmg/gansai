@@ -42,3 +42,63 @@
     font-family: var(--font-merriweather), Georgia, serif; /* Atualizado */
   }
 }
+/* app/globals.css */
+
+/* --- Estilos Customizados para o Swiper Carrossel --- */
+
+/* Cor e Espessura das Setas de Navegação */
+.swiper-button-next,
+.swiper-button-prev {
+  /* Cor baseada no seu tema */
+  color: var(--color-c4) !important;
+}
+
+/* Acessando o ícone da seta diretamente para deixá-lo mais espesso */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-weight: 900 !important; /* Deixa a linha do ícone bem mais grossa */
+  font-size: 24px !important;   /* Aumenta um pouco o tamanho geral da seta */
+}
+
+/* Afastando as Setas dos Cards (Apenas em Telas Grandes) */
+@media (min-width: 1024px) {
+  .swiper-button-prev {
+    /* Move a seta para a borda esquerda do carrossel */
+    left: 0px !important;
+  }
+  .swiper-button-next {
+    /* Move a seta para a borda direita do carrossel */
+    right: 0px !important;
+  }
+}
+
+/* --- Estilos da Paginação (Pontos) --- */
+
+/* Cor dos pontos de paginação */
+.swiper-pagination-bullet {
+  background: var(--color-c4) !important;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Cor do ponto de paginação ativo */
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* app/globals.css */
+
+/* --- Correção para o Fundo de Autocomplete do Navegador --- */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  /* Truque para "pintar" por cima do fundo azul do browser */
+  -webkit-box-shadow: 0 0 0 30px none inset !important; /* << Use a cor de fundo do seu site (c0) */
+
+  /* Força a cor do texto a ser a que definimos (c4) */
+
+  /* Garante que a transição de cor da borda funcione */
+  transition: background-color 5000s ease-in-out 0s;
+}

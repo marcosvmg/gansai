@@ -14,7 +14,7 @@ export default function SectionAbout() {
     <div ref={ref} className="w-full flex justify-center bg-transparent py-16 px-4 overflow-hidden">
       <section className="w-full max-w-7xl flex flex-col items-center gap-12">
         {/* Container para o conteúdo principal */}
-        <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-8">
+        <div id='about' className="w-full flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-8">
 
           {/* Coluna da Imagem 1 (Oculta em mobile, visível em desktop) */}
           <div className={`hidden lg:flex w-full lg:w-1/2 justify-center transition-all duration-1000 delay-300 ${inView ? 'opacity-100' : 'opacity-0'}`}>

@@ -17,7 +17,7 @@ export default function Main() {
       {/* Layout em coluna no mobile, linha no desktop (lg) */}
       <main className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8 w-full max-w-7xl">
         {/* Coluna de Texto */}
-        <div className="w-full lg:w-1/2 space-y-8 text-center lg:text-left">
+        <div className="w-full lg:w-1/2 space-y-8 text-center lg:text-left ">
           {/* Título com tamanhos de fonte responsivos e animação */}
           <h1 className={`text-c5 text-5xl md:text-7xl lg:text-[100px] xl:text-[110px] font-garamond italic font-medium leading-tight transition-all duration-700 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'} delay-200`}>
             HIGH-END WATER COLOR PENCILS.
