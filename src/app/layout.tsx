@@ -4,10 +4,13 @@ import type { Metadata } from 'next';
 import { EB_Garamond, Merriweather } from 'next/font/google';
 import './globals.css';
 
-import DecorationParallax from '@/app/components/DecorationParallax'; // Ajuste o caminho se necessário
-// ALTERAÇÃO: Importamos o novo componente de botão
-import BackToTopButton from '@/app/components/BackToTopButton'; // Ajuste o caminho se necessário
+// 1. Importando todos os componentes de layout que criamos
+import Header from '@/app/components/Header';
+import Footer from '@/app/components/Footer';
+import DecorationParallax from '@/app/components/DecorationParallax';
+import BackToTopButton from '@/app/components/BackToTopButton';
 
+// 2. Configuração das fontes
 const ebGaramond = EB_Garamond({
   variable: '--font-eb-garamond',
   subsets: ['latin'],
@@ -22,21 +25,43 @@ const merriweather = Merriweather({
   style: ['normal', 'italic'],
 });
 
+// 3. Metadata do site, incluindo os ícones (favicon)
 export const metadata: Metadata = {
   title: 'Gansai',
-  description: 'Descrição aqui',
+  description: 'High-end watercolor pencils for artists.',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// 4. Estrutura do Layout Principal
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="pt-BR" className={`${ebGaramond.variable} ${merriweather.variable} bg-[#FFFFEE] scroll-smooth scroll-pt-20 select-none`}>
+    <html lang="pt-BR" className={`${ebGaramond.variable} ${merriweather.variable} bg-[#FFFFEE] scroll-smooth scroll-pt-[120px] select-none`}>
       <body>
+        {/* Efeito parallax fica no fundo, atrás de todo o conteúdo */}
         <DecorationParallax />
 
-        <main className="relative z-10">
-          {children}
-        </main>
+        {/* Wrapper principal para o conteúdo, garantindo que ele fique acima do parallax */}
+        {/* As classes flex garantem que o footer fique no final da página, mesmo em páginas com pouco conteúdo */}
+        <div className="relative z-10 flex min-h-screen flex-col">
+          <Header />
 
+          {/* O conteúdo de cada página (page.tsx) será renderizado aqui */}
+          <main className="flex-grow">
+            {children}
+          </main>
+
+          <Footer />
+        </div>
+
+        {/* Botão flutuante que fica acima de todo o conteúdo */}
         <BackToTopButton />
       </body>
     </html>
