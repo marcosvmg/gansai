@@ -33,7 +33,7 @@ export default function SectionProducts() {
     <div
       ref={ref}
       id='products'
-      className="w-full flex justify-center bg-transparent py-16 px-4 overflow-hidden"
+      className="w-full flex justify-center bg-transparent py-16 px-4 overflow-hidden "
     >
       <section className="w-full max-w-7xl flex flex-col items-center gap-16 md:gap-24">
 
