@@ -1,39 +1,62 @@
-
+// app/api/send/route.ts
 
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-// Inicializa o Resend com a chave de API que está nas nossas variáveis de ambiente
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Interface para definir os tipos de dados que esperamos receber do formulário
+interface RequestBody {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+// 1. Verificação da Chave de API (fora da função principal)
+const resendApiKey = process.env.RESEND_API_KEY;
+if (!resendApiKey) {
+  console.error("RESEND_API_KEY is not set. Please add it to your .env.local file");
+  // Se a chave não estiver configurada, não podemos nem inicializar o Resend.
+  // Em um caso real, isso impediria a função de funcionar corretamente.
+}
+
+const resend = new Resend(resendApiKey);
 
 export async function POST(request: Request) {
-  // Extrai os dados do corpo da requisição
-  const { name, email, subject, message } = await request.json();
+  // 2. Tipagem explícita dos dados recebidos
+  const { name, email, subject, message } = await request.json() as RequestBody;
+
+  // Verificação extra para garantir que a chave de API foi carregada no ambiente
+  if (!resendApiKey) {
+    return NextResponse.json(
+      { error: 'API key not configured. Cannot send email.' },
+      { status: 500 }
+    );
+  }
 
   try {
-    // Tenta enviar o e-mail usando o Resend
     const { data, error } = await resend.emails.send({
-      from: 'Gansai Website <onboarding@resend.dev>', // O remetente. Para produção, use seu domínio verificado (ex: 'contato@seusite.com')
-      to: ['devmarcosvmg@gmail.com'],      // << SUBSTITUA PELO SEU E-MAIL
+      from: 'Gansai Website <onboarding@resend.dev>',
+      to: ['SEU_EMAIL_DE_DESTINO@example.com'], // << SUBSTITUA PELO SEU E-MAIL
       subject: `New Message from ${name}: ${subject}`,
+      replyTo: email, // Adiciona o e-mail do usuário no campo "Responder Para"
       html: `
         <h1>New Contact Form Submission</h1>
         <p><strong>From:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
         <hr>
         <p>${message.replace(/\n/g, '<br>')}</p>
       `,
     });
 
-    // Se houver um erro no envio, lança uma exceção
     if (error) {
-      return NextResponse.json({ error }, { status: 500 });
+      console.error("Resend API Error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // Se for bem-sucedido, retorna os dados
     return NextResponse.json(data);
-  } catch (error) {
-    // Se ocorrer um erro no nosso bloco try, retorna um erro genérico
-    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
+  } catch (exception) {
+    // Captura qualquer outro erro inesperado
+    console.error("Unexpected Error:", exception);
+    return NextResponse.json({ error: 'An unexpected error occurred.' }, { status: 500 });
   }
 }
